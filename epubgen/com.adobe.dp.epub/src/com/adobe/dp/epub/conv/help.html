@@ -1,0 +1,113 @@
+<html>
+<body>
+<h2 align="center">Basic operation</h2>
+<p>
+This converter is capable of converting FB2, DOCX and RTF files into EPUB.
+To initiate conversion, drag-n-drop your file(s) into the "Documents" tab.
+Once conversion is complete you can drag-n-drop resulting EPUB to the desired
+destination. 
+</p>
+<p>
+To customize the conversion process you can specify additional fonts and
+CSS stylesheets. Those can be drag-n-dropped into "Resources" tab.
+Also, several conversion settings can be controlled from the "Settings" tab.
+</p>
+<h2 align="center">Font embedding</h2>
+<p>
+For font embedding to work, the converter must be able to find the fonts
+which are used in the document. Since converter is written in Java,
+it has limited knowledge of the system default font location. It looks
+in <code>C:\windows\fonts</code> and <code>/Library/Fonts</code> which
+should take care of most Windows and Mac computers. If your fonts are
+installed in a different location, you need to manually drag-n-drop them
+into "Resources" tab. 
+</p>
+<p>
+Fonts that ere embedded into the EPUB document have to be scrambled or "mangled"
+for legal reasons. There are two mangling algorithms available. IDPF algorithm
+is standard, but not yet widely supported (in 2009). Adobe algorithm is
+Adobe-specific, but it has been implemented in all Adobe-based applications
+and devices. The algorithm can be chosen using "Use Adobe font mangling"
+checkbox.
+</p>
+<h2 align="center">Usage with hand-held devices</h2>
+<p>
+It is possible to set up EPUBGen converter to copy converted EPUB files right
+on your hand-held device, as long as you can access its storage through the
+file system. EPUBGen takes a single command-line parameter with is the folder
+where documents, resources and settings are stored. You can create
+<code>EPUBGen</code> folder on your hand-held device, copy 
+<code>EPUBGen.jar</code> there and invoke it <b>from that folder</b> like this:
+</p>
+<pre>
+java -jar EPUBGen.jar .
+</pre>
+<p>
+This way, converted documents will be written to <code>Documents</code> subfolder
+of <code>EPUBGen</code> folder.
+</p>
+<h2 align="center">Using CSS with FB2 files</h2>
+<p>
+Custom CSS stylesheet allows one to control most aspects of FB2-to-EPUB
+conversion. CSS stylesheet is simply a text file with .css extension.
+CSS syntax is simple and can be learned by example. Note that this
+converter supports only a small subset of CSS selectors (only element
+names and classes).
+</p>
+<p>
+For example, the following stylesheet can be used to produce EPUB with
+Calibri font used as default and titles centered on the page:
+</p>
+<pre>
+body {
+  font-family: 'Calibri';
+}
+title {
+  text-align: center;
+}
+</pre>
+<p>The following fb2 element names can be used in the stylesheet: 
+<code>a</code>,
+<code>annotation</code>,
+<code>body</code>,
+<code>cite</code>,
+<code>code</code>,
+<code>date</code>,
+<code>empty-line</code>,
+<code>epigraph</code>,
+<code>image</code>,
+<code>poem</code>,
+<code>stanza</code>,
+<code>sub</code>,
+<code>subtitle</code>,
+<code>sup</code>,
+<code>table</code>,
+<code>text-author</code>,
+<code>title</code>,
+<code>td</code>,
+<code>th</code>,
+<code>v</code>.
+</p>
+<p>The following classes have predefined meaning: 
+<code>.p</code> (plain paragraph),
+<code>.title-p</code> (title paragraph),
+<code>.title1-.title6</code> (title with a particular nesting level).
+</p>
+<h2 align="center">Reporting bugs</h2>
+<p>Bug reports are welcome and should be filed at the EPUBGen project web site: 
+<a href="http://code.google.com/p/epub-tools/issues/list">
+http://code.google.com/p/epub-tools/issues/list
+</a>. Please provide problem files or explain how they can be obtained. Note that
+it is unrealistic for a small volunteer project like EPUBGen to implement
+all possible features in complex input formats like DOCX and EPUB. Therefore,
+some bugs will be marked "WontFix" and will probably never be fixed.</p>
+<h2 align="center">Why such a weird user interface?!</h2>
+<p>
+Some users find this user interface convenient, but its design is basically a joke
+and it violates all sort of accepted practices. In Russian e-book community several
+"single-button" converters are quite popular. "Single-button" label implies that
+the less buttons the better. Well, here you have a "buttonless" converter - so it
+got to be even better - right?
+</p>
+</body>
+</html>

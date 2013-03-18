@@ -1,0 +1,206 @@
+h1 {
+	font-size: 2em;
+	font-weight: bold;
+	margin-top: 0.67em;
+	margin-bottom: 0.67em;
+	page-break-after: avoid;
+	page-break-inside: avoid;
+}
+
+h2 {
+	font-size: 1.5em;
+	font-weight: bold;
+	margin-top: 0.75em;
+	margin-bottom: 0.75em;
+	page-break-after: avoid;
+	page-break-inside: avoid;
+}
+
+h3 {
+	font-size: 1.17em;
+	font-weight: bold;
+	margin-top: 0.83em;
+	margin-bottom: 0.83em;
+	page-break-after: avoid;
+	page-break-inside: avoid;
+}
+
+h4 {
+	font-weight: bold;
+	margin-top: 1.12em;
+	margin-bottom: 1.12em;
+	page-break-after: avoid;
+	page-break-inside: avoid;
+}
+
+h5 {
+	font-size: 0.83em;
+	font-weight: bold;
+	margin-top: 1.5em;
+	margin-bottom: 1.5em;
+	page-break-after: avoid;
+	page-break-inside: avoid;
+}
+
+h6 {
+	font-size: 0.75em;
+	font-weight: bold;
+	margin-top: 1.67em;
+	margin-bottom: 1.67em;
+	page-break-after: avoid;
+	page-break-inside: avoid;
+}
+
+body {
+	margin-left: 8px;
+	margin-right: 8px;
+	margin-top: 8px;
+	margin-bottom: 8px;
+}
+
+p {
+	margin-top: 1.12em;
+	margin-bottom: 1.12em;
+}
+
+ul {
+	margin-left: 40px;
+	page-break-before: avoid;
+}
+
+ol {
+	margin-left: 40px;
+	page-break-before: avoid;
+}
+
+dl {
+	margin-top: 1.12em;
+	margin-bottom: 1.12em;
+	page-break-before: avoid;
+}
+
+dd {
+	margin-left: 40px;
+}
+
+pre {
+	margin-top: 1.12em;
+	margin-bottom: 1.12em;
+	font-family: monospace;
+	white-space: pre;
+}
+
+br {
+	margin-top: 1.12em;
+	margin-bottom: 1.12em;
+	border: 1px outset lightgray;
+}
+
+center {
+	text-align: center;
+}
+
+blockquote {
+	margin-top: 1.12em;
+	margin-left: 40px;
+	margin-right: 40px;
+	margin-bottom: 1.12em;
+}
+
+address {
+	font-style: italic;
+}
+
+ins {
+	text-decoration: underline;
+}
+
+del {
+	text-decoration: line-through;
+}
+
+a {
+	text-decoration: underline;
+	color: blue;
+}
+
+tt {
+	font-family: monospace;
+}
+
+i {
+	font-style: italic;
+}
+
+b {
+	font-weight: bold;
+}
+
+s {
+	text-decoration: line-through;
+}
+
+strike {
+	text-decoration: line-through;
+}
+
+u {
+	text-decoration: underline;
+}
+
+big {
+	font-size: 1.17em;
+}
+
+small {
+	font-size: 0.83em;
+}
+
+em {
+	font-style: italic;
+}
+
+strong {
+	font-weight: bold;
+}
+
+dfn {
+	font-style: italic;
+}
+
+kbd {
+	font-family: monospace;
+}
+
+samp {
+	font-family: monospace;
+}
+
+var {
+	font-style: italic;
+}
+
+cite {
+	font-style: italic;
+}
+
+abbr {
+	font-variant: small-caps;
+	letter-spacing: 0.1em;
+}
+
+acronym {
+	font-variant: small-caps;
+	letter-spacing: 0.1em;
+}
+
+sub {
+	font-size: 0.83em;
+	vertical-align: sub;
+}
+
+super {
+	font-size: 0.83em;
+	vertical-align: super;
+}
+	

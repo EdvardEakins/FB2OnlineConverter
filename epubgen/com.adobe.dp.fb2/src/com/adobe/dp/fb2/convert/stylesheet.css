@@ -1,0 +1,186 @@
+@namespace "http://www.gribuser.ru/xml/fictionbook/2.0";
+
+body {
+	font-family: serif;
+	margin-right: 8pt;
+}
+a {
+	line-height: 0.1;
+	vertical-align: super;
+	font-size: 0.7em;
+	-epubgen-name: a;
+}
+sub {
+	line-height: 0.1;
+	font-size: 0.7em;
+	-epubgen-name: sub;
+}
+sup {
+	line-height: 0.1;
+	font-size: 0.7em;
+	-epubgen-name: sup;
+}
+table {
+	font-size: 0.8em;
+	font-family: sans-serif;
+	margin: 0.5em;
+	border-collapse: collapse;
+	border: 1px solid black;
+	-epubgen-name: table;
+}
+tr {
+	-epubgen-name: tr;
+}
+td {
+	border: 1px solid black;
+	padding: 0.3em;
+	-epubgen-name: td;
+}
+th {
+	font-weight: bold;
+	text-align: center;
+	border: 1px solid black;
+	background-color: #CEE;
+	padding: 0.3em;
+	-epubgen-name: th;
+}
+code {
+	font-family: monospace;
+	-epubgen-name: code;
+}
+p {
+	margin: 0px;
+	text-indent: 1.5em;
+	text-align: justify;
+	-epubgen-name: p;
+}
+title p {
+	margin: 0px 0px 0.5em 0px;
+	text-indent: 0px;
+	text-align: inherit;
+}
+title {
+	font-size: 2.2em;
+	font-weight: bold;
+	page-break-inside: avoid;
+	page-break-after: avoid;
+	text-align: center;
+	margin: 1em 0px 0.5em 0px;
+	-epubgen-name: div;
+}
+section title {
+	font-size: 1.8em;
+	text-align: center;
+	margin: 1em 0px 0.5em 0px;
+}
+section section title {
+	font-size: 1.5em;
+	text-align: left;
+	margin: 1em 0px 0.5em 1.5625em;
+}
+section section section title {
+	font-size: 1.3em;
+	text-align: left;
+	margin: 1em 0px 0.5em 1.923em;
+}
+section section section section title {
+	font-size: 1.2em;
+	text-align: left;
+	margin: 1em 0px 0.5em 2.083em;
+}
+section section section section section title {
+	font-size: 1.1em;
+	text-align: left;
+	margin: 1em 0px 0.5em 2.272em;
+}
+section section section section section section title {
+	text-align: left;
+	margin: 1em 0px 0.5em 2.5em;
+}
+epigraph {
+	text-align: left;
+	font-style: italic;
+	margin: 1em 1em 2em 30%;
+	-epubgen-name: div;
+}
+image {
+	text-align: center;
+	padding: 3px;
+	-epubgen-name: image;
+}
+image::content {
+	max-width: 95%;
+}
+image::title {
+	margin: 0px;
+	-epubgen-name: p;
+}
+v {
+	text-indent: -1em;
+	padding-left: 1em;
+	margin: 0px;
+	-epubgen-name: p;
+}
+poem {
+	margin: 0.5em 0px 0.5em 2em;
+	-epubgen-name: div;
+}
+date {
+	margin: 0.5em 0px 0.5em 50%;
+	font-style: italic;
+	-epubgen-name: p;
+}
+stanza {
+	margin: 0.5em 0px;
+	page-break-inside: avoid;
+	-epubgen-name: div;
+}
+empty-line {
+	height: 1em;
+	margin: 0px;
+	-epubgen-name: p;
+}
+cite {
+	margin: 0.5em 0px 0.5em 1em;
+	font-size: 0.95em;
+	-epubgen-name: div;
+}
+subtitle {
+	text-indent: 0px;
+	text-align: center;
+	font-style: italic;
+	font-weight: bold;
+	margin: 0.5em 2em;
+	page-break-inside: avoid;
+	page-break-after: avoid;
+	-epubgen-name: p;
+}
+annotation {
+	margin: 1em 0px 1em 2em;
+	text-indent: 0px;
+	font-style: italic;
+	-epubgen-name: div;
+}
+text-author {
+	text-indent: 0px;
+	margin: 0.2em 0px 0px 3em;
+	-epubgen-name: p;
+}
+emphasis {
+	-epubgen-name: em;
+}
+strong {
+	-epubgen-name: strong;
+}
+style {
+	-epubgen-name: span;
+}
+strikethrough {
+	-epub-name: del;
+}
+.italic {
+	font-style: italic;
+}
+.bold {
+	font-weight: bold;
+}

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+            http://www.springframework.org/schema/context  http://www.springframework.org/schema/context/spring-context-3.0.xsd"
+        >
+
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location" value="file:${catalina.base}/conf/converter.properties"/>
+        <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE"/>
+    </bean>
+
+    <import resource="classpath:spring-database.xml"/>
+    <import resource="classpath:spring-services.xml"/>
+
+    <bean class="net.flibusta.servlet.ConverterController">
+        <property name="staticRedirectUrlPrefix" value="${static.url.prefix}"/>
+        <property name="useXAccelRerirect" value="${use.x-accel-redirect}"/>
+    </bean>
+
+    <bean class="net.flibusta.servlet.MailController">
+        <property name="fromAddress" value="${mail.from.address}"/>
+        <property name="mailSessionProperties">
+            <props>
+                <prop key="mail.smtp.user">${mail.smtp.user}</prop>
+                <prop key="mail.smtp.port">${mail.smtp.port}</prop>
+                <prop key="mail.smtp.host">${mail.smtp.host}</prop>
+                <prop key="mail.smtp.auth">false</prop>
+            </props>
+        </property>
+    </bean>
+    <bean class="net.flibusta.servlet.MassConvertController" destroy-method="shutdown">
+        <property name="staticRedirectUrlPrefix" value="${static.url.prefix}"/>
+        <property name="convertersPoolSize" value="${mass.converters.pool.size}"/>
+        <property name="useXAccelRerirect" value="${use.x-accel-redirect}"/>
+    </bean>
+
+    <context:component-scan base-package="net.flibusta.servlet">
+        <context:exclude-filter type="regex" expression="net.flibusta.servlet.ConverterController"/>
+        <context:exclude-filter type="regex" expression="net.flibusta.servlet.MassConvertController"/>
+        <context:exclude-filter type="regex" expression="net.flibusta.servlet.MailController"/>
+    </context:component-scan>
+
+</beans>

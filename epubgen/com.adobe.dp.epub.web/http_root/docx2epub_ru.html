@@ -1,0 +1,173 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+   "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<style type="text/css">
+h1 {
+	font-size: 1.2em;
+}
+table {
+	margin-top: 0.5em; 
+	table-layout: fixed;
+}
+.tool {
+	font-family: serif;
+	border: 1px solid black;
+	background-color: #DDEEEE;
+	padding: 1em 1em 0.5em 1em;
+	width: 32em;
+	margin: 4em auto;
+	overflow: hidden;
+}
+.button {
+	text-align: center;
+}
+.hbox {
+	float: right;
+	font-size: 0.8em;
+}
+p {
+	text-indent: 1.5em;
+	margin: 2px 0px;
+}
+td.help {
+	font-size: 0.8em;
+	font-family: Arial, Helvetica, sans-serif;
+	padding-bottom: 1.5em;
+}
+.hidden {
+	display: none;
+}
+.shown {
+}
+p.auth {
+	text-indent: 0px;
+	margin: 1em 0px 0px 0px;
+	font-size: 0.75em;
+	font-family: Arial, Helvetica, sans-serif;
+}
+.input {
+	width: 21em;
+}
+.file {
+	width: 100%;
+}
+.url {
+	width: 100%;
+}
+.label {
+	text-indent: 0px;
+	width: 11.3em;
+}
+.fonts {
+	margin-left: 1em;
+}
+</style>
+<script language="JavaScript">
+var shown = false
+function toggleHelp() {
+	var i = 0;
+	shown = !shown;
+	while( true ) {
+		var e = document.getElementById("help" + (i++));
+		if( !e )
+			break;
+		e.className = (shown ? "shown" : "hidden");
+	}
+	return undefined;
+}
+function toggleURL() {
+	var useurl = document.getElementById("useurl");
+	var file = document.getElementById("file");
+	var url = document.getElementById("url");
+	if( useurl != null && file != null && url != null )
+		if( useurl.checked )
+		{
+			file.className = "hidden"
+			url.className = "url";
+		}
+		else
+		{
+			file.className = "file"
+			url.className = "hidden";
+		}
+}
+function toggleFontReport() {
+	var fontReport = document.getElementById("fontReport");
+	var submit = document.getElementById("submit");
+	if( fontReport != null && submit != null )
+		if( fontReport.checked )
+		{
+			submit.value = "Проверить шрифты!";
+		}
+		else
+		{
+			submit.value = "Конвертировать!";
+		}
+}
+setTimeout("toggleURL();toggleFontReport()",100)
+</script>
+</head>
+<body>
+<div class="tool">
+<p class="hbox">
+<a href="javascript:toggleHelp()"><span id="help0" class="hidden">Убрать </span>Помощь</a>
+<a class="fonts" href="/epubgen/fonts?lang=ru&amp;ref=/docx2epub_ru.html">Шрифты</a>
+</p>
+<h1>Конвертация DOCX в EPUB</h1>
+<p>
+Экспериментальный сервис конвертации документов из формата DOCX в EPUB. Никаких гарантий!
+Используйте на свой страх и риск!
+</p>
+<form action="/epubgen/docx2epub" method="post" enctype="multipart/form-data">
+<table>
+<tr><td align="right" class="label"><b>Файл в формате DOCX:</b></td>
+<td class="input">
+<input type="hidden" name="lang" value="ru"/>
+<input type="hidden" name="ref" value="/docx2epub_ru.html"/>
+<input id="file" class="file" type="file" name="file"/>
+<input id="url" class="hidden" type="text" name="url"/>
+</td></tr>
+<tr class="hidden" id="help1"><td colspan="2" class="help">
+<p>Выберите файл в формате DOCX (Microsoft Office 2007). Файлы в формате DOC не
+поддерживаются! Сначала необходимо конвертировать DOC в DOCX используя Office 2007</p>
+</td></tr>
+<tr><td colspan="2"><input type="checkbox" name="translit" value="yes" checked="yes"/>
+Транслитерировать заглавие, автора и другие атрибуты документа
+</td></tr>
+<tr class="hidden" id="help2"><td colspan="2" class="help">
+<p>Выберите эту опцию, если ваше устройство для чтения не русифицировано</p>
+<p>Сам текст книги не нуждается в транслитерации, т.к. конвертер включает в документ шрифты, необходимые
+для отображения текста программой для чтения. Однако атрибуты книги (заглавие, автор, содержание)
+отображаются с помощью шрифтов установленных на самом устройстве и, если эти шрифты не
+содержат кириллицы, атрибуты будут отображаться "квадратиками".</p>
+</tr>
+<tr><td colspan="2"><input type="checkbox" name="useurl" id="useurl" onclick="toggleURL()"/>
+Использовать ссылку на файл (URL)
+</td></tr>
+<tr class="hidden" id="help3"><td colspan="2" class="help">
+<p>Использовать адрес ресурса в Интернете (т.е. http://...) вместо имени файла на
+вашем компьютере</p>
+</tr>
+<tr><td colspan="2"><input id="fontReport" type="checkbox" name="fontReport" onclick="toggleFontReport()"/>
+Показать список использованных шрифтов
+</td></tr>
+<tr class="hidden" id="help4"><td colspan="2" class="help">
+<p>Выберите эту опцию, если вы не уверены, загружены ли все необходимые шрифты в систему</p>
+<p>Конвертер должен иметь доступ к шрифтам, используемым в документе. Только очень ограниченное
+количество шрифтов встроенно в конвертер по умолчанию. Каждый пользователь сервиса должен
+<a href="/epubgen/fonts?lang=ru&amp;ref=/docx2epub_ru.html">загрузить в систему</a>
+свои собственные шрифты. Эту операцию следует производить отдельно на каждом компьютере
+и в каждом браузере.
+</p>
+</tr>
+</table>
+<p class="button">
+<input id="submit" type="submit" value="Конвертировать!"/>
+</p>
+</form>
+<div class="hidden" id="help5"><p class="auth">Вопросы и комментарии: <a href="mailto:sorotokin@yahoo.com">sorotokin@yahoo.com</a>. Исходники этой
+утилиты (кроме шрифтов) могут быть получены <a href="http://code.google.com/p/epub-tools">здесь</a>.</p></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,153 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+   "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<style type="text/css">
+h1 {
+	font-size: 1.2em;
+}
+table {
+	margin-top: 0.5em; 
+	table-layout: fixed;
+}
+.tool {
+	font-family: serif;
+	border: 1px solid black;
+	background-color: #DDEEEE;
+	padding: 1em 1em 0.5em 1em;
+	width: 32em;
+	margin: 4em auto;
+	overflow: hidden;
+}
+.button {
+	text-align: center;
+}
+.hbox {
+	float: right;
+	font-size: 0.8em;
+}
+p {
+	text-indent: 1.5em;
+	margin: 2px 0px;
+}
+td.help {
+	font-size: 0.8em;
+	font-family: Arial, Helvetica, sans-serif;
+	padding-bottom: 1.5em;
+}
+.hidden {
+	display: none;
+}
+.shown {
+}
+p.auth {
+	text-indent: 0px;
+	margin: 1em 0px 0px 0px;
+	font-size: 0.75em;
+	font-family: Arial, Helvetica, sans-serif;
+}
+.input {
+	width: 21em;
+}
+.file {
+	width: 100%;
+}
+.url {
+	width: 21em;
+}
+.label {
+	width: 10em;
+}
+</style>
+<script language="JavaScript">
+var shown = false
+function toggleHelp() {
+	var i = 0;
+	shown = !shown;
+	while( true ) {
+		var e = document.getElementById("help" + (i++));
+		if( !e )
+			break;
+		e.className = (shown ? "shown" : "hidden");
+	}
+	return undefined;
+}
+function toggleURL() {
+	var useurl = document.getElementById("useurl");
+	var file = document.getElementById("file");
+	var url = document.getElementById("url");
+	if( useurl != null && file != null && url != null )
+		if( useurl.checked )
+		{
+			file.className = "hidden"
+			url.className = "url";
+		}
+		else
+		{
+			file.className = "file"
+			url.className = "hidden";
+		}
+}
+setTimeout("toggleURL()",100)
+</script>
+</head>
+<body>
+<div class="tool">
+<p class="hbox">
+<a href="javascript:toggleHelp()"><span id="help0" class="hidden">Убрать </span>Помощь</a>
+</p>
+<h1>Конвертация FB2 в EPUB</h1>
+<!--
+<p style="color:red; font-weight: bold">ИДЁТ РАБОТА НАД САЙТОМ! CЕРВИС МОЖЕТ БЫТЬ ВРЕМЕННО НЕРАБОТОСПОСОБЕН!</p>
+-->
+<form action="/epubgen/fb2epub" method="post" enctype="multipart/form-data">
+<table>
+<tr><td align="right" class="label"><b>Файл в формате FB2:</b></td>
+<td class="input">
+<input id="file" class="file" type="file" name="file"/>
+<input id="url" class="hidden" type="text" name="url"/>
+</td></tr>
+<tr class="hidden" id="help1"><td colspan="2" class="help">
+<p>Выберите файл в формате FB2. Это может быть как текстовый (.fb2), так и сжатый (.fb2.zip) файл.
+Совместимые версии формата: 2.0 и 2.1.</p>
+<p>Все структурные элементы FB2 распознаются конвертером, включая таблицы и стили. С другой стороны, конвертация
+атрибутов (таких как имя программы, создавшей FB2) осуществляется только частично.</p>
+</td></tr>
+<tr><td align="right" class="label">Шаблон:</td>
+<td class="input"><input class="file" type="file" name="template"/></td></tr>
+<tr class="hidden" id="help2"><td colspan="2" class="help">
+<p>Этот параметр указывать не обязательно</p>
+<p>Здесь могут быть заданы дополнительные стили - либо как CSS либо как FB2 (в этом случае используются
+только стили из документа-шаблона, содержание этого документа несущественно). Примеры шаблонов:</p>
+<ul>
+<li><a href="fb2epub/defaultTemplate.fb2.zip">Шаблон, используемый по умолчанию</a></li>
+<li><a href="fb2epub/sampleTemplate.fb2.zip">Пример нестандартного шаблона</a></li>
+</ul>
+</td></tr>
+<tr><td colspan="2"><input type="checkbox" name="translit" value="yes" checked="yes"/>
+Транслитерировать заглавие, автора и другие атрибуты книги
+</td></tr>
+<tr class="hidden" id="help3"><td colspan="2" class="help">
+<p>Выберите эту опцию, если ваше устройство для чтения не русифицировано</p>
+<p>Сам текст книги не нуждается в транслитерации, т.к. конвертер включает в документ шрифты, необходимые
+для отображения текста программой для чтения. Однако атрибуты книги (заглавие, автор, содержание)
+отображаются с помощью шрифтов установленных на самом устройстве и, если эти шрифты не
+содержат кириллицы, атрибуты будут отображаться "квадратиками".</p>
+</tr>
+<tr><td colspan="2"><input type="checkbox" name="useurl" id="useurl" onclick="toggleURL()"/>
+Использовать ссылку на файл FB2 (URL)
+</td></tr>
+<tr class="hidden" id="help4"><td colspan="2" class="help">
+<p>Использовать адрес ресурса в Интернете (т.е. http://...) вместо имени файла на
+вашем компьютере</p>
+</tr>
+</table>
+<p class="button">
+<input type="submit" value="Конвертировать!"/>
+</p>
+</form>
+<div class="hidden" id="help5"><p class="auth">Вопросы и комментарии: <a href="mailto:sorotokin@yahoo.com">sorotokin@yahoo.com</a>. Исходники этой
+утилиты (кроме шрифтов) могут быть получены <a href="http://code.google.com/p/epub-tools">здесь</a>.</p></div>
+</div>
+</body>
+</html>

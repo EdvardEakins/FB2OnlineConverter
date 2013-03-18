@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
+        >
+
+
+    <bean id="downloadService" class="net.flibusta.download.impl.TimedDownloadService" destroy-method="shutdown"
+          p:fetchPoolSize="${downloadService.fetchPoolSize}"
+          p:fetchTimeoutSeconds="${downloadService.fetchTimeout}"
+          init-method="init"
+          />
+
+    <!--<bean id="downloadService" class="net.flibusta.download.impl.SyncHttpDownloadService" destroy-method="shutdown"/>-->
+    <bean id="locker" class="net.flibusta.concurrent.impl.SemaphoreLockManager"/>
+    <!--<bean id="locker" class="net.flibusta.concurrent.impl.HashLockManager"/>-->
+
+    <bean id="conversionServiceFactory" class="net.flibusta.converter.impl.ConversionServiceFactoryImpl">
+        <property name="serviceMap">
+            <map>
+                <entry key="epub" value-ref="toEpubConverterService"/>
+                <entry key="mobi" value-ref="toMobiConverterService"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="toEpubConverterService" class="net.flibusta.converter.impl.ToEpubConversionService"
+          p:bookDao-ref="bookDao"
+          p:fb2epub-ref="fb2ToEpubConverter"
+          p:rtfepub-ref="rtfToEpubConverter"
+          p:docxepub-ref="docxToEpubConverter"
+            />
+
+    <bean id="toMobiConverterService" class="net.flibusta.converter.impl.ToMobiConversionService"
+          p:bookDao-ref="bookDao"
+          p:epub2mobi-ref="epubToMobiConverter"
+          p:conversionServiceFactory-ref="conversionServiceFactory"/>
+
+    <bean id="fb2ToEpubConverter" class="net.flibusta.converter.impl.AdobeConverterAdapter">
+        <property name="conversionService">
+            <bean class="com.adobe.dp.fb2.convert.FB2ConversionService">
+                <property name="properties">
+                    <props>
+                        <prop key="fontDirs">${fontDirs}</prop>
+                        <prop key="translit">false</prop>
+                        <prop key="adobeMangling">false</prop>
+                    </props>
+                </property>
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="rtfToEpubConverter" class="net.flibusta.converter.impl.AdobeConverterAdapter">
+        <property name="conversionService">
+            <bean class="com.adobe.dp.office.conv.RTFConversionService">
+                <property name="properties">
+                    <props>
+                        <prop key="fontDirs">${fontDirs}</prop>
+                        <prop key="translit">false</prop>
+                        <prop key="adobeMangling">false</prop>
+                    </props>
+                </property>
+
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="docxToEpubConverter" class="net.flibusta.converter.impl.AdobeConverterAdapter">
+        <property name="conversionService">
+            <bean class="com.adobe.dp.office.conv.DOCXConversionService">
+                <property name="properties">
+                    <props>
+                        <prop key="fontDirs">${fontDirs}</prop>
+                        <prop key="translit">false</prop>
+                        <prop key="adobeMangling">false</prop>
+                    </props>
+                </property>
+
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="epubToMobiConverter" class="net.flibusta.converter.impl.EpubToMobiConverter"/>
+
+
+</beans>

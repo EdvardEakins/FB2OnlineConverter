@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                           http://www.springframework.org/schema/tx    http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+                           http://www.springframework.org/schema/aop   http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+                           http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd"
+        >
+    <!-- common DB core beans -->
+    <bean id="dataSourceFactory" class="net.flibusta.persistence.DerbyEmbeddedDataSourceFactory"
+          destroy-method="shutdown"
+          p:user="${database.ConnectionUserName}"
+          p:password="${database.ConnectionPassword}"
+          p:databaseName="${database.path}"
+            />
+
+    <bean id="dataSource" factory-bean="dataSourceFactory" factory-method="createDataSource"/>
+
+    <jdbc:initialize-database data-source="dataSource" enabled="${database.init}">
+        <jdbc:script location="classpath:schema.sql"/>
+    </jdbc:initialize-database>
+    <!--
+     <jdbc:embedded-database id="dataSource" type="DERBY">
+            <jdbc:script location="classpath:schema.sql"/>
+     </jdbc:embedded-database>
+    -->
+
+    <!--
+        <bean id="liquibase" class="liquibase.integration.spring.SpringLiquibase">
+            <property name="dataSource" ref="dataSource"/>
+            <property name="changeLog" value="classpath:changelog-master.xml"/>
+        </bean>
+    -->
+
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!-- DAO beans -->
+    <bean id="urlDao" class="net.flibusta.persistence.dao.impl.UrlDaoSql"
+          p:dataSource-ref="dataSource"
+            />
+    <bean id="bookDao" class="net.flibusta.persistence.dao.impl.BookDaoSql"
+          p:dataSource-ref="dataSource"
+          p:fileStoragePath="${fileStoragePath}"
+            />
+
+    <bean id="batchDao" class="net.flibusta.persistence.dao.impl.BatchDaoSql"
+          p:dataSource-ref="dataSource"
+          p:fileStoragePath="${fileStoragePath}"
+            />
+
+    <!-- Automagic Transaction bind spots -->
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="*" propagation="REQUIRED"/>
+        </tx:attributes>
+    </tx:advice>
+    <aop:config>
+        <aop:advisor advice-ref="txAdvice"
+                     pointcut="execution(* net.flibusta.persistence.dao.impl.UrlDaoSql.add*(..))"/>
+        <aop:advisor advice-ref="txAdvice"
+                     pointcut="execution(* net.flibusta.persistence.dao.impl.UrlDaoSql.remove*(..))"/>
+        <aop:advisor advice-ref="txAdvice" pointcut="execution(* net.flibusta.persistence.dao.impl.BookDaoSql.*(..))"/>
+    </aop:config>
+</beans>

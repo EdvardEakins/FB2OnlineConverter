@@ -1,0 +1,39 @@
+h1 {
+	font-size: 1.2em;
+	margin: 0px;
+	padding: 0.25em 0.25em 0.15em 0.25em;
+}
+.sep {
+	border-top: 1px solid #444444;
+	margin: 1em 0px 0px 0px;
+}
+.tool {
+	font-family: serif;
+	border: 1px solid black;
+	background-color: #DDEEEE;
+	padding: 1em 1em 0.5em 1em;
+	width: 32em;
+	margin: 4em auto;
+	overflow: hidden;
+}
+form {
+	margin: 5px;
+}	
+.file {
+	width: 80%;
+	margin: 0px 2px;
+}
+.install {
+	margin: 2px 1em;
+}
+.delete {
+	margin: 0px 2px;
+}
+.back {
+	margin: 0px;
+	float: right;
+	font-size: 0.8em;
+}
+.rfont {
+	margin: 2px 0px;
+}
