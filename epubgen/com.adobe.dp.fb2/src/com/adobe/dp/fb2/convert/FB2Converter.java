@@ -523,6 +523,7 @@ public class FB2Converter {
 						BitmapImageResource resource = getBitmapImageResource(coverpageImage);
 						image.setImageResource(resource);
 						svg.add(image);
+                        epub.setCoverImage(resource);
 					}
 				}
 			}
