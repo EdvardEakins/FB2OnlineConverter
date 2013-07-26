@@ -14,7 +14,7 @@ For fb2 -> mobi and epub -> mobi conversion Amazon's [KindleGen] converter used.
 ## Runtime requirements
 - java 1.6+
 - [Apache Tomcat]
-- [Nginx] (optional)
+- [Nginx] - (optional)
 
 ## Build requirements
 - java 1.6+
