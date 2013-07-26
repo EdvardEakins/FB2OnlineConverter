@@ -9,8 +9,20 @@
 
     <name>converter</name>
 
+    <issueManagement>
+        <url>https://github.com/EdvardEakins/FB2OnlineConverter/issues</url>
+        <system>GitHub Issues</system>
+    </issueManagement>
+    <scm>
+		<url>https://github.com/EdvardEakins/FB2OnlineConverter</url>
+		<connection>scm:git:https://github.com/EdvardEakins/FB2OnlineConverter.git</connection>
+		<developerConnection>scm:git:git@github.com:EdvardEakins/FB2OnlineConverter.git</developerConnection>
+	</scm>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.build.resourceEncoding>UTF-8</project.build.resourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
 
     <modules>
