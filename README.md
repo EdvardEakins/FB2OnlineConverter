@@ -31,7 +31,7 @@ For fb2 -> mobi and epub -> mobi conversion Amazon's [KindleGen] converter used.
 - copy application webapp/target/converter.war into CATALINA_HOME/webapps
 - copy and modify application configuration file webapp/conf/converter.properties into CATALINA_HOME/conf
   - to create and initialize internal database set configuration parameter `database.init = true` before first startup . Don't forget to set it to `false` for subsequent server starts.
-
+- start server and go to http://host:port/converter
 
 Converter can work as standalone application or paired with Nginx as reverse proxy frontend.
 Configuration with proxy highly recommended for public installation with high traffic.
