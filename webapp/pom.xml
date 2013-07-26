@@ -3,11 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>net.flibusta</groupId>
-    <artifactId>converter</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <artifactId>converter-web</artifactId>
+    <version>1.0</version>
     <packaging>war</packaging>
 
-    <name>converter</name>
+    <name>converter web application</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -17,10 +17,8 @@
 
         <dependency>
             <groupId>com.adobe.dp</groupId>
-            <artifactId>epubgen</artifactId>
-            <version>custom</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/com_adobe_dp_fb2.jar</systemPath>
+            <artifactId>epubgen-custom</artifactId>
+            <version>1.1</version>
         </dependency>
 
         <dependency>
@@ -153,6 +151,7 @@
                             <targetPath>WEB-INF/bin</targetPath>
                         </resource>
                     </webResources>
+                    <warName>converter</warName>
                 </configuration>
             </plugin>
             <plugin>

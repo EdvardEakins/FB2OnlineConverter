@@ -15,14 +15,14 @@
 
     <dependencies>
 
-<!--
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.8.1</version>
-            <scope>test</scope>
-        </dependency>
--->
+        <!--
+                <dependency>
+                    <groupId>junit</groupId>
+                    <artifactId>junit</artifactId>
+                    <version>4.8.1</version>
+                    <scope>test</scope>
+                </dependency>
+        -->
 
     </dependencies>
 
@@ -35,6 +35,7 @@
                 <version>1.7</version>
                 <executions>
                     <execution>
+                        <id>sources</id>
                         <phase>generate-sources</phase>
                         <goals>
                             <goal>add-source</goal>
@@ -48,19 +49,54 @@
                             </sources>
                         </configuration>
                     </execution>
-<!--
                     <execution>
-                        <phase>generate-test-sources</phase>
+                        <id>resources</id>
+                        <phase>generate-resources</phase>
                         <goals>
-                            <goal>add-source</goal>
+                            <goal>add-resource</goal>
                         </goals>
                         <configuration>
-                            <sources>
-                                <source>com.adobe.dp.epubtest/src</source>
-                            </sources>
+                            <resources>
+                                <resource>
+                                    <directory>com.adobe.dp.epub/src</directory>
+                                    <excludes>
+                                        <exclude>**/*.java</exclude>
+                                    </excludes>
+                                </resource>
+                                <resource>
+                                    <directory>com.adobe.dp.fb2/src</directory>
+                                    <excludes>
+                                        <exclude>**/*.java</exclude>
+                                    </excludes>
+                                </resource>
+                                <resource>
+                                    <directory>com.adobe.dp.office.word/src</directory>
+                                    <excludes>
+                                        <exclude>**/*.java</exclude>
+                                    </excludes>
+                                </resource>
+                                <resource>
+                                    <directory>com.adobe.dp.otf/src</directory>
+                                    <excludes>
+                                        <exclude>**/*.java</exclude>
+                                    </excludes>
+                                </resource>
+                            </resources>
                         </configuration>
                     </execution>
--->
+                    <!--
+                                        <execution>
+                                            <phase>generate-test-sources</phase>
+                                            <goals>
+                                                <goal>add-source</goal>
+                                            </goals>
+                                            <configuration>
+                                                <sources>
+                                                    <source>com.adobe.dp.epubtest/src</source>
+                                                </sources>
+                                            </configuration>
+                                        </execution>
+                    -->
                 </executions>
             </plugin>
 
@@ -73,6 +109,7 @@
                     <target>1.6</target>
                 </configuration>
             </plugin>
+<!--
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -83,6 +120,7 @@
                     </excludes>
                 </configuration>
             </plugin>
+-->
         </plugins>
     </build>
 
