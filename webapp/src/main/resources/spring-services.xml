@@ -9,6 +9,10 @@
     <bean id="downloadService" class="net.flibusta.download.impl.TimedDownloadService" destroy-method="shutdown"
           p:fetchPoolSize="${downloadService.fetchPoolSize}"
           p:fetchTimeoutSeconds="${downloadService.fetchTimeout}"
+          p:i2pProxyHost="${downloadService.i2pProxyHost}"
+          p:i2pProxyPort="${downloadService.i2pProxyPort}"
+          p:onionProxyHost="${downloadService.onionProxyHost}"
+          p:onionProxyPort="${downloadService.onionProxyPort}"
           init-method="init"
           />
 

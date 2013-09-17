@@ -24,6 +24,27 @@ public class TimedDownloadService implements DownloadService {
     private ExecutorService fetchExecutor;
     private int fetchPoolSize = 2;
     private long fetchTimeoutSeconds = 60;
+    private String onionProxyHost;
+    private int onionProxyPort;
+
+    public void setOnionProxyHost(String onionProxyHost) {
+        this.onionProxyHost = onionProxyHost;
+    }
+
+    public void setOnionProxyPort(int onionProxyPort) {
+        this.onionProxyPort = onionProxyPort;
+    }
+
+    public void setI2pProxyHost(String i2pProxyHost) {
+        this.i2pProxyHost = i2pProxyHost;
+    }
+
+    public void setI2pProxyPort(int i2pProxyPort) {
+        this.i2pProxyPort = i2pProxyPort;
+    }
+
+    private String i2pProxyHost;
+    private int i2pProxyPort;
 
     public TimedDownloadService() {
     }
@@ -57,6 +78,8 @@ public class TimedDownloadService implements DownloadService {
 
     public File executeFetch(URL url) throws Exception {
         HttpClient httpClient = getHttpClient();
+        HostConfiguration hostConfiguration = getHostConfiguration(url);
+
         String uri = url.toString();
         GetMethod method = new GetMethod(uri);
         method.getParams().setParameter(HttpMethodParams.USER_AGENT, "Mobipocket/ePub Converter");
@@ -71,7 +94,7 @@ public class TimedDownloadService implements DownloadService {
 
                 do {
                     logger.debug("Start download " + url + " try=" + (10 - retryCount));
-                    code = httpClient.executeMethod(method);
+                    code = httpClient.executeMethod(hostConfiguration, method);
                     if (code == 503) {
                         Thread.sleep(500);
                     }
@@ -127,6 +150,19 @@ public class TimedDownloadService implements DownloadService {
         return file;
     }
 
+    private HostConfiguration getHostConfiguration(URL url) {
+        HostConfiguration hostConfiguration = null;
+        if (url.getHost().endsWith(".i2p")) {
+            hostConfiguration = new HostConfiguration();
+            hostConfiguration.setProxy(i2pProxyHost, i2pProxyPort);
+        }
+        if (url.getHost().endsWith(".onion")) {
+            hostConfiguration = new HostConfiguration();
+            hostConfiguration.setProxy(onionProxyHost, onionProxyPort);
+        }
+        return hostConfiguration;
+    }
+
     private HttpClient getHttpClient() {
         HttpConnectionManager httpConnectionManager = new SimpleHttpConnectionManager(false);
         HttpConnectionManagerParams params = httpConnectionManager.getParams();
@@ -134,10 +170,6 @@ public class TimedDownloadService implements DownloadService {
         params.setMaxTotalConnections(30);
         params.setLinger(10);
 
-//        HostConfiguration hostConfiguration;
-//        hostConfiguration = new HostConfiguration();
-//        hostConfiguration.setHost("static.flibusta.net");
-//        params.setMaxConnectionsPerHost(hostConfiguration, 6);
         return new HttpClient(httpConnectionManager);
 
     }
