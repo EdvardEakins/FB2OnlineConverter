@@ -146,7 +146,9 @@ public class TimedDownloadService implements DownloadService {
         if ((contentType != null && "application/zip".equals(contentType.getValue())) || fileName.endsWith(".zip")) {
             file = unzip(file);
         }
-        logger.debug("Downloaded " + file.getName());
+        if (file != null) {
+            logger.debug("Downloaded " + file.getName());
+        }
         return file;
     }
 

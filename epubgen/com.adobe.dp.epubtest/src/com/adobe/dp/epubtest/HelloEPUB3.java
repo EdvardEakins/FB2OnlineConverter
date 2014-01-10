@@ -60,7 +60,7 @@ public class HelloEPUB3 {
 			pRule.set("margin", new CSSLength(0, "px"));
 			pRule.set("text-indent", new CSSLength(1, "em"));
 			pRule.set("text-align", new CSSName("justify"));
-			h1Rule.set("font-family", new CSSQuotedString("Liberation Serif"));
+      pRule.set("font-family", new CSSQuotedString("Liberation Serif"));
 
 			// style bitmap class (JPEG image)
 			Selector bitmapSelector = stylesheet.getSimpleSelector(null,

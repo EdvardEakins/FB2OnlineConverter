@@ -4,7 +4,7 @@
 
     <groupId>net.flibusta</groupId>
     <artifactId>converter-web</artifactId>
-    <version>1.0</version>
+    <version>1.1</version>
     <packaging>war</packaging>
 
     <name>converter web application</name>
@@ -12,7 +12,7 @@
     <parent>
         <groupId>net.flibusta</groupId>
         <artifactId>converter</artifactId>
-        <version>1.0</version>
+        <version>1.1</version>
     </parent>
 
     <dependencies>
@@ -20,7 +20,7 @@
         <dependency>
             <groupId>com.adobe.dp</groupId>
             <artifactId>epubgen-custom</artifactId>
-            <version>1.1</version>
+            <version>1.2</version>
         </dependency>
 
         <dependency>

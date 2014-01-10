@@ -136,9 +136,9 @@ public class FB2ConversionService extends ConversionService {
 			return outFile;
 		} catch (Exception e) {
 			e.printStackTrace(log);
-			e.printStackTrace();
+//			e.printStackTrace();
+            throw new RuntimeException(e);
 		}
-		return null;
 	}
 
 	public Image getIcon(File src) {

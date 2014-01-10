@@ -30,6 +30,9 @@
 
 package com.adobe.dp.otf;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class FontProperties implements FontPropertyConstants, Comparable {
 
 	private String familyName;
@@ -44,7 +47,11 @@ public class FontProperties implements FontPropertyConstants, Comparable {
 		this.style = style;
 	}
 
-	public int hashCode() {
+    public FontProperties(String familyName, String weight, String style) {
+        this(familyName, getWeightCode(weight), getStyleCode(style));
+    }
+
+    public int hashCode() {
 		return familyName.hashCode() + weight + style;
 	}
 
@@ -88,7 +95,42 @@ public class FontProperties implements FontPropertyConstants, Comparable {
 		return Integer.toString(weight);
 	}
 
-	public boolean equals(Object other) {
+    private static Map<String, Integer> weightToCodeMap = new HashMap<String, Integer>();
+    static {
+        weightToCodeMap.put("light", 300);
+        weightToCodeMap.put("normal", 400);
+        weightToCodeMap.put("medium", 500);
+        weightToCodeMap.put("semibold", 600);
+        weightToCodeMap.put("bold", 800);
+        weightToCodeMap.put("black", 900);
+    }
+
+    public static int getWeightCode(String weightString) {
+        Integer code = weightToCodeMap.get(weightString.toLowerCase());
+        if (code == null) {
+            code = weightToCodeMap.get("normal");
+        }
+        return code;
+    }
+
+    private static Map<String, Integer> styleToCodeMap = new HashMap<String, Integer>();
+    static {
+        styleToCodeMap.put("normal", STYLE_REGULAR);
+        styleToCodeMap.put("regular", STYLE_REGULAR);
+        styleToCodeMap.put("italic", STYLE_ITALIC);
+        styleToCodeMap.put("oblique", STYLE_OBLIQUE);
+    }
+
+    private static int getStyleCode(String style) {
+        Integer code = styleToCodeMap.get(style.toLowerCase());
+        if (code == null) {
+            code = styleToCodeMap.get("normal");
+        }
+        return code;
+    }
+
+
+    public boolean equals(Object other) {
 		if (other.getClass() != getClass())
 			return false;
 		FontProperties o = (FontProperties) other;

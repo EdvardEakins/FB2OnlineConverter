@@ -31,18 +31,20 @@
 package com.adobe.dp.fb2.convert;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.Map;
 
-import com.adobe.dp.css.CSSStylesheet;
-import com.adobe.dp.css.CSSURL;
+import com.adobe.dp.css.*;
 import com.adobe.dp.otf.ByteArrayFontInputStream;
 import com.adobe.dp.otf.FontInputStream;
 import com.adobe.dp.otf.FontLocator;
 import com.adobe.dp.otf.FontProperties;
+import org.omg.CosNaming._BindingIteratorImplBase;
 
 public class EmbeddedFontLocator extends FontLocator {
 
-	Hashtable fontSrcs;
+	Map<FontProperties, CSSURL> fontSrcs = new HashMap<FontProperties, CSSURL>();
 
 	CSSStylesheet stylesheet;
 
@@ -51,25 +53,56 @@ public class EmbeddedFontLocator extends FontLocator {
 	public EmbeddedFontLocator(CSSStylesheet stylesheet, FontLocator chained) {
 		this.stylesheet = stylesheet;
 		this.chained = chained;
-	}
+        while (stylesheet.statements().hasNext()) {
+            Object o = stylesheet.statements().next();
+            if (o instanceof FontFaceRule) {
+                FontFaceRule fontFaceRule = (FontFaceRule) o;
+                CSSValue fontSrc = fontFaceRule.get("src");
+                if (fontSrc instanceof CSSURL) {
+                    CSSValue fontFamily = fontFaceRule.get("font-family");
+                    CSSValue fontStyle = fontFaceRule.get("font-style");
+                    CSSValue fontWeight = fontFaceRule.get("font-weight");
+
+                    if (fontFamily != null) {
+                        int count = CSSValueList.valueCount(fontFamily, ',');
+                        for (int i = 0; i < count; i++) {
+                            String family = getStringValue(CSSValueList.valueAt(fontFamily, i, ','));
+                            FontProperties fp = new FontProperties(family, getStringValue(fontWeight), getStringValue(fontStyle));
+                            fontSrcs.put(fp, (CSSURL) fontSrc);
+                        }
+
+                    }
+                }
+
+
+            }
+        }
+    }
+
+    private String getStringValue(Object val) {
+        if (val instanceof CSSQuotedString) {
+            return ((CSSQuotedString) val).getText();
+        }
+        return val.toString();
+    }
 
 	public FontInputStream locateFont(FontProperties key) throws IOException {
-		CSSURL src = (CSSURL) fontSrcs.get(key);
+		CSSURL src = fontSrcs.get(key);
 		try {
 			if (src != null) {
 				return new ByteArrayFontInputStream(src.getData());
 			}
-		} catch (IOException e) {
+		} catch (IOException ignored) {
 		}
 		return chained.locateFont(key);
 	}
 
 	public boolean hasFont(FontProperties key) {
-		CSSURL src = (CSSURL) fontSrcs.get(key);
+		CSSURL src = fontSrcs.get(key);
 		try {
 			if (src != null && src.getData() != null)
 				return true;
-		} catch (IOException e) {
+		} catch (IOException ignored) {
 		}
 		return chained.hasFont(key);
 	}
