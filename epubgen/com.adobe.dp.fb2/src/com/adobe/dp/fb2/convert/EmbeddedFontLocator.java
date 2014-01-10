@@ -33,6 +33,7 @@ package com.adobe.dp.fb2.convert;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.Map;
 
 import com.adobe.dp.css.*;
@@ -53,8 +54,9 @@ public class EmbeddedFontLocator extends FontLocator {
 	public EmbeddedFontLocator(CSSStylesheet stylesheet, FontLocator chained) {
 		this.stylesheet = stylesheet;
 		this.chained = chained;
-        while (stylesheet.statements().hasNext()) {
-            Object o = stylesheet.statements().next();
+        Iterator cssStatements = stylesheet.statements();
+        while (cssStatements.hasNext()) {
+            Object o = cssStatements.next();
             if (o instanceof FontFaceRule) {
                 FontFaceRule fontFaceRule = (FontFaceRule) o;
                 CSSValue fontSrc = fontFaceRule.get("src");
