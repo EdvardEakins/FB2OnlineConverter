@@ -91,21 +91,44 @@ public class FB2DocumentParser {
 			}
 		}
 
+        String encoding = null;
 		if (sniff[0] == (byte) 0xef && sniff[1] == (byte) 0xbb && sniff[2] == (byte) 0xbf) {
 			// UTF-8 marker. Not all XML parsers correctly ignore that
 			in.skip(3);
-		}
-        in.mark(128);
-        sniff = new byte[128];
-        in.read(sniff);
-        in.reset();
-        String head = new String(sniff);
-        int encodingBeginIndex = head.indexOf("encoding=\"");
-        String encoding = null;
-        if (encodingBeginIndex > 0) {
-            encodingBeginIndex += "encoding=\"".length();
-            int encodingEndIndex = head.indexOf('"', encodingBeginIndex + 1);
-            encoding = head.substring(encodingBeginIndex, encodingEndIndex);
+            encoding = "UTF-8";
+        }
+		if (sniff[0] == (byte) 0xfe && sniff[1] == (byte) 0xff) {
+			// UTF-16be marker. Not all XML parsers correctly ignore that
+			in.skip(2);
+            encoding = "UTF-16BE";
+        }
+		if (sniff[0] == (byte) 0x00 && sniff[1] == (byte) 0x00 && sniff[2] == (byte) 0xfe && sniff[3] == (byte) 0xff) {
+			// UTF-32be marker. Not all XML parsers correctly ignore that
+			in.skip(4);
+            encoding = "UTF-32BE";
+        }
+		if (sniff[0] == (byte) 0xff && sniff[1] == (byte) 0xfe) {
+			// UTF-16le marker. Not all XML parsers correctly ignore that
+			in.skip(2);
+            encoding = "UTF-16LE";
+        }
+		if (sniff[0] == (byte) 0xff && sniff[1] == (byte) 0xfe && sniff[2] == (byte) 0x00 && sniff[3] == (byte) 0x00) {
+			// UTF-16le marker. Not all XML parsers correctly ignore that
+			in.skip(4);
+            encoding = "UTF-32LE";
+        }
+        if (encoding == null) { // no BOM found - read encoding from prolog
+            in.mark(128);
+            sniff = new byte[128];
+            in.read(sniff);
+            in.reset();
+            String head = new String(sniff);
+            int encodingBeginIndex = head.indexOf("encoding=\"");
+            if (encodingBeginIndex > 0) {
+                encodingBeginIndex += "encoding=\"".length();
+                int encodingEndIndex = head.indexOf('"', encodingBeginIndex + 1);
+                encoding = head.substring(encodingBeginIndex, encodingEndIndex);
+            }
         }
         SAXParserFactory factory = SAXParserFactory.newInstance();
 		factory.setNamespaceAware(true);
