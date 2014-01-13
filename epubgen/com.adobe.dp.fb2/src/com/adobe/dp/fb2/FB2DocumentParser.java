@@ -108,14 +108,15 @@ public class FB2DocumentParser {
             encoding = "UTF-32BE";
         }
 		if (sniff[0] == (byte) 0xff && sniff[1] == (byte) 0xfe) {
-			// UTF-16le marker. Not all XML parsers correctly ignore that
-			in.skip(2);
-            encoding = "UTF-16LE";
-        }
-		if (sniff[0] == (byte) 0xff && sniff[1] == (byte) 0xfe && sniff[2] == (byte) 0x00 && sniff[3] == (byte) 0x00) {
-			// UTF-16le marker. Not all XML parsers correctly ignore that
-			in.skip(4);
-            encoding = "UTF-32LE";
+            if (sniff[2] == (byte) 0x00 && sniff[3] == (byte) 0x00) {
+                // UTF-32le marker. Not all XML parsers correctly ignore that
+                in.skip(4);
+                encoding = "UTF-32LE";
+            } else {
+                // UTF-16le marker. Not all XML parsers correctly ignore that
+                in.skip(2);
+                encoding = "UTF-16LE";
+            }
         }
         if (encoding == null) { // no BOM found - read encoding from prolog
             in.mark(128);
