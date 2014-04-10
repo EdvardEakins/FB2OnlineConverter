@@ -1,4 +1,4 @@
-# FB2OnlineConverter
+# FB2OnlineConverter [![Build Status](https://travis-ci.org/EdvardEakins/FB2OnlineConverter.svg?branch=master)](https://travis-ci.org/EdvardEakins/FB2OnlineConverter)
 
 Web application for FictionBook 2.0 ([fb2]) to epub and mobi convertion.
 
